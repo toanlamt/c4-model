@@ -26,17 +26,17 @@ workspace extends ../models.dsl {
                             deploymentNode "ec2-a" {
                                 tags "Amazon Web Services - EC2 Instance"
 
-                                backOfficeAppInstance = containerInstance backOfficeApp
                                 searchWebApiInstance = containerInstance searchWebApi
-                                adminWebApiInstance = containerInstance adminWebApi
                                 publicWebApiInstance = containerInstance publicWebApi
+                                adminWebApiInstance = containerInstance adminWebApi
+                                publisherRecurrentUpdateInstance = containerInstance publisherRecurrentUpdater
                             }
 
                             deploymentNode "ec2-b" {
                                 tags "Amazon Web Services - EC2 Instance"
 
                                 containerInstance bookEventConsumer
-                                containerInstance bookEventSystem
+                                containerInstance bookEventStream
                             }
                         }
 
@@ -90,7 +90,7 @@ workspace extends ../models.dsl {
             include *
             autoLayout lr
         }
-        #dynamic <container> <name> <description>
+        # dynamic <container> <name> <description>
         dynamic deployWorkflow "Dynamic-001-WF" "Bookstore platform deployment workflow" {
             developer -> repository "Commit, and push changes"
             repository -> pipeline "Trigger pipeline job"
